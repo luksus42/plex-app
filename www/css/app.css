@@ -1,0 +1,465 @@
+#hello-page{
+        padding: 1rem;
+}
+.title, .introduction, .button {
+        margin-bottom: 1rem;
+}
+
+.is-hidden {
+        display: none;
+}
+
+.img-cordova {
+        display: block;
+        margin: 0 auto;
+}
+
+.cordova-indicator {
+        text-align: center;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+
+
+[data-role="content"] img {
+    max-width: 100% !important;
+}
+
+[data-role="page"] {
+    padding-bottom: 20px;
+}
+
+[data-role="back-btn"],
+[data-role="header"],
+[data-role="actions"],
+[data-role="tabtitle"] {
+    background-color: #1A1A1A !important;
+    color: #b5b5b5 !important;
+}
+
+body,
+[data-role="content"],
+[data-role="list"] ul li > a,
+[data-role="list"] ul li > label {
+    background-color: #252525 !important;
+    color: #b5b5b5 !important;
+}
+
+h1,
+h2,
+label,
+p,
+[data-role="option-selector"] li {
+    color: #b5b5b5 !important;
+}
+
+[data-role="option-selector"] li {
+    border-top: 1px solid #505050 !important;
+}
+
+[data-role="option-selector"] {
+    -webkit-box-shadow: inset 0 2px 2px 0 #828282 !important;
+    box-shadow: inset 0 2px 2px 0 #828282 !important;
+    border-color: #505050 !important;
+}
+
+[data-role="option-selector"] li:first-child {
+    border-top: 0 !important;
+}
+
+[data-role="list"],
+[data-role="list"] ul li > a {
+    border-top: none !important;
+}
+
+[data-role="list"] ul li {
+    border-bottom: solid 0.1rem #333333 !important;
+}
+
+input {
+    background-color: #5D5D5D;
+    color: #DADADA;
+}
+
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+
+.fileType-track {
+    background: url(../img/Apps-File-Audio-icon.png) no-repeat left;
+}
+
+.fileType-movie {
+    background: url(../img/Apps-Player-Video-icon.png) no-repeat left;
+}
+
+.fileType-episode {
+    background: url(../img/Apps-Player-Video-icon.png) no-repeat left;
+}
+
+.fileType-picture {
+    background: url(../img/Apps-File-Image-icon.png) no-repeat left;
+}
+
+.fileType-directory {
+    background: url(../img/Apps-Folder-icon.png) no-repeat left;
+}
+
+.fileType-default {
+    background: url(../img/Apps-Icon-Template-File-icon.png) no-repeat left;
+}
+
+.icon {
+    width: 35px;
+    height: 35px;
+    margin-left: 0.5rem !important;
+}
+
+/*
+[data-role="list"] ul {
+    padding-left: 0.5rem !important;
+}
+
+[data-role="list"] ul li > a {
+    padding-left: 0.5rem !important;
+}
+*/
+
+.pageContainer {
+    padding: 0rem 1rem;
+    font-size: 0.9rem;
+}
+
+[data-role="button"] {
+    background: #cc7b19 !important;
+}
+
+[data-role="header"]:after {
+    background: #cc7b19 !important;
+    border-top: 1px solid #B16B17 !important;
+}
+
+.audioPlayer {
+    width: 100%;
+    height: 0rem;
+    display: none;
+}
+
+.videoPlayer {
+    /*height: 56%;*/
+    width: 100%;
+    background: url(../img/ajax-loader.gif) no-repeat center #000000;
+    margin-bottom: -3px;
+}
+
+#playerBox {
+    display: none;
+    /*border-top: 0.1rem solid #cc7b19;*/
+}
+
+.settingGroup {
+    margin-top: 0.5rem;
+    margin-bottom: 1.0rem;
+    padding-bottom: 1rem;
+    border-bottom: solid 0.1rem #505050;
+}
+
+[data-role="dialog"] {
+    height: auto !important;
+    padding: 20px 0px !important;
+}
+
+
+[data-role="list"] ul li > label {
+    font-size: 0.9rem !important;
+    color: #cc7b19 !important;
+    right: 0rem !important;
+    width: 3rem !important;
+    margin-top: -1rem !important;
+    height: 2rem !important;
+    line-height: 2rem !important;
+}
+
+.custom-controls {
+    z-index: 2147483648;
+}
+
+#playerControls {
+    width: auto;
+    padding: 0.3rem 0.2rem 0.3rem 0;
+    background-color: #1b1b1b;
+    display: flex;
+    border-top: 0.1rem solid #cc7b19;
+    z-index: 2147483648;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+progress {
+    width: 100% !important;
+    border: 1px solid #7D7D7D;
+    margin: auto 0;
+    background-color: #9C9C9C !important;
+    float: left;
+    border-radius: 2px !important;
+    height: 20px !important;
+}
+
+progress[value]::-webkit-progress-value {
+    background: #008ec3 !important;
+}
+
+#playPauseBtn {
+    height: 30px;
+    min-width: 35px;
+    background-color: #1b1b1b;
+    border-radius: 5px;
+    border-width: 1px !important;
+    border-style: none;
+    /*border-color: #7D7D7D;*/
+    float: left;
+}
+
+.play {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/media-playback-start.svg) no-repeat center;
+    background-size: 24px;
+}
+
+.pause {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/media-playback-pause.svg) no-repeat center;
+    background-size: 24px;
+}
+
+#timer {
+    float: right;
+    padding: 0.5rem;
+    color: #787878;
+}
+
+#volume {
+    float: left;
+    width: 10%;
+    min-width: 50px;
+    max-width: 175px;
+    margin: auto 0.1rem;
+    border: 1px solid #7D7D7D;
+    border-radius: 2px;
+    background: #9C9C9C;
+    background-size: 100% 35px;
+    height: 20px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 30px !important;
+    background: #EDEDED !important;
+}
+
+#muteBtn {
+    height: 30px;
+    min-width: 28px;
+    background-color: #1b1b1b;
+    border-radius: 5px;
+    border-width: 1px !important;
+    /*border-color: #7D7D7D;*/
+    border-style: none;
+    float: left;
+    /*margin-left: 0.3rem;*/
+}
+
+#fullscreenBtn {
+    height: 30px;
+    min-width: 35px;
+    border-radius: 5px;
+    border-width: 1px !important;
+    /*border-color: #7D7D7D;*/
+    border-style: none;
+    float: left;
+    background-size: 24px;
+}
+
+.start-fullscreen {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/view-fullscreen.svg) no-repeat center #1b1b1b;
+}
+
+.end-fullscreen {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/view-restore.svg) no-repeat center #1b1b1b;
+}
+
+.unmuted {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/speaker.svg) no-repeat center;
+    background-size: 24px;
+}
+
+.muted {
+    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/speaker-mute.svg) no-repeat center;
+    background-size: 24px;
+}
+
+::-webkit-media-controls {
+    display: none !important;
+}
+
+.fullscreen-controls {
+    position: fixed;
+    bottom: 0px;
+    width: 100% !important;
+}
+
+#player-container {
+    position: fixed;
+    width: 100% !important;
+    bottom: 0px;
+    z-index: 10;
+}
+
+#switchPlayerVisability {
+    width: 20%;
+    height: 20px;
+    background-size: 22px;
+    position: relative;
+    left: 40%;
+    /*border: solid 0.1rem #cc7b19;*/
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.image-go-up {
+    background: url(../img/go-up.png) no-repeat center #DADADA;
+}
+
+.image-go-down {
+    background: url(../img/go-down.png) no-repeat center #DADADA;
+}
+
+#playerPlayingTitle {
+    padding: 5px 10px;
+    border-bottom: 1px solid #464646;
+    font-size: 0.9rem;
+    background-color: #1A1A1A;
+}
+
+[data-role="list"] .playingTitle > a {
+    color: #cc7b19 !important;
+    font-weight: bold;
+    /*margin-left: 10px;*/
+    width: 80%;
+}
+
+[data-role="list"] .playingTitle {
+    background: #544e46;
+}
+
+[data-role="list"] .playListTitle > a {
+    display: inline-block;
+    background: none !important;
+    width: 80%;
+}
+
+#playListHeader ul li {
+    background: #dadada;
+    border: none !important;
+}
+
+#playListHeader ul li > a {
+    display: inline-block;
+    background: none !important;
+    width: 80%;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #252525 !important;
+}
+
+#playListHeader ul li > a:after {
+    content: none;
+    top: 1px;
+}
+
+.removeFromPlaylist{
+    display: inline-block;
+    width: 3rem;
+    height: inherit;
+    float: right;
+    background: transparent url(/usr/share/icons/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.8rem;
+    background-size: 40% 40%;
+    position: absolute;
+    right: 0rem;
+}
+
+#mediaInfo {
+    padding: 7px 10px 10px 10px;
+    overflow: overlay;
+    font-size: 0.9rem;
+}
+
+#infoMedia {
+    display: inline-block;
+    margin-bottom: 10px;
+    border-bottom: solid 0.1rem #333333;
+    position: relative;
+    width: 100%;
+    min-width: 290px;
+}
+
+#infoCover {
+    float: left;
+    width: 33%;
+}
+
+#playMovie {
+    border-radius: 0;
+    width: 100%;
+    margin-top: -3px;
+}
+
+#coverImage {
+    width: 100%;
+    display: inline-block;
+    min-height: 142px;
+    background-color: #000000;
+}
+
+#infoStream {
+    margin-left: 5px;
+    display: inline-block;
+    width: 60%;
+    height: 100%;
+    position: absolute;
+}
+
+#tableStreamInfos {
+    position: absolute;
+    bottom: 35px;
+}
+
+#yearInfo {
+    color: #cc7b19 !important;
+}
+
+.tableCategory {
+    color: #cc7b19;
+    padding-right: 10px;
+}
+
+#playList ul li > a:after {
+    /*background: transparent url(/usr/share/icons/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.5rem !important;
+    background-size: 50% 50% !important;
+    top: 60% !important;*/
+    content: none;
+}
+
+#playList {
+    background: #424141 !important;
+    max-height: 300px;
+    overflow-y: scroll;
+}

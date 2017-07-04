@@ -1,0 +1,15 @@
+{
+    "name": "plex-local.luksus",
+    "description": "",
+    "architecture": "all",
+    "title": "Plex",
+    "hooks": {
+        "Plex": {
+            "apparmor": "Plex.apparmor",
+            "desktop": "Plex.desktop"
+        }
+    },
+    "version": "0.3.3",
+    "maintainer": "Lukas Baubkus <lukas.baubkus@gmx.de>",
+    "framework": "ubuntu-sdk-15.04.5"
+}

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Plex
+Exec=webapp-container --inspector ./www/index.html
+Icon=plex.png
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+

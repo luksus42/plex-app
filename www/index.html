@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>An Ubuntu HTML5 application</title>
+    <meta name="description" content="An Ubuntu HTML5 application">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <!--
+         Application stylesheets
+         Include your own stylesheets below to style your application.
+      -->
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+    <!--
+        Ubuntu UI javascript imports - Ambiance theme
+        Ubuntu provides building blocks that you can use in your application. For more information, you can check out the documentation at http://design.ubuntu.com/apps.
+     -->
+    <!-- Ubuntu UI Style imports - Ambiance theme -->
+    <link href="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+
+    <!-- application js imports -->
+    <script src="js/application.js"></script>
+    <script src="js/plex.js"></script>
+    <script src="js/browser.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/helper.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+
+    <!-- External javascript imports -->
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/core.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/buttons.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/dialogs.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/page.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/pagestacks.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/tab.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/tabs.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/list.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/toolbars.js"></script>
+    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/option-selector.js"></script>
+
+</head>
+<body>
+
+    <div data-role="mainview">
+
+        <header data-role="header">
+        </header>
+
+        <div data-role="content">
+
+            <div data-role="pagestack" id="browse-path">
+                <!-- The application main page -->
+
+                <div data-role="page" id="root" data-title="Plex">
+
+                    <section data-role="list" id="browser">
+                        <ul>
+                        </ul>
+                    </section>
+
+                    <footer data-role="footer" id="toolbar" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="refreshSection">
+                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/reload.svg" alt="no pic"/>
+                                        <span>refresh section</span>
+                                    </a>
+                                </li>
+                                <li data-role="tabitem" data-page="settingsTab">
+                                    <a href="#" id="settingsBtn">
+                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
+                                        <span>Settings</span>
+                                    </a>
+                                </li>
+                                <!--
+                                <li data-role="tabitem" data-page="playerTab">
+                                    <a href="#" id="playerBtn">
+                                        <img src="" alt="no pic"/>
+                                        <span>Player</span>
+                                    </a>
+                                </li>
+                                -->
+                            </ul>
+                        </nav>
+                    </footer>
+                </div>
+
+                <div data-role="page" id="settings" data-title="Settings">
+
+                    <footer data-role="footer" id="settingsToolbar" class="revealed">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="#" id="save">
+                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/save.svg" alt="no pic"/>
+                                        <span>save</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
+
+                    <div class="pageContainer">
+                        <div class="settingGroup">
+                            <h2>Connection:</h2>
+                            <p id="connectionSwitch" style="margin: 15px 0">
+                                <input type="checkbox" id="switchAuthType"><label for="switchAuthType">Use plex.tv login</label>
+                            </p>
+                            <p id="local_connection" style="margin: 15px 0;display:block">http://
+                                <input type="url" id="serverUrl" placeholder="IP" style="width:120px"> :
+                                <input type="url" id="port" placeholder="PORT" style="width:50px">
+                            </p>
+                            <p id="plextv_connection" style="margin: 15px 0;display:none">
+                                <input type="text" id="user" placeholder="Username/Email" style="width:120px; margin-right:10px">
+                                <input type="password" id="password" placeholder="Password" style="width:120px">
+                            </p>
+                        </div>
+
+                        <div class="settingGroup">
+                            <h2>Video Transcoding:</h2>
+                            <section data-role="option-selector" id="transcodingOptions">
+                               <ul>
+                                 <li data-value="0" id="os0">
+                                   <p>original</p>
+                                 </li>
+                                 <li data-value="1" id="os1">
+                                   <p>simple (repack)</p>
+                                 </li>
+                                 <li data-value="2" id="os2">
+                                   <p>2 Mbps 720p</p>
+                                 </li>
+                                 <li data-value="3" id="os3">
+                                   <p>1.5 Mbps 480p</p>
+                                 </li>
+                                 <li data-value="4" id="os4">
+                                   <p>720kbps 360p</p>
+                                 </li>
+                                 <li data-value="5" id="os5">
+                                   <p>320kbps 360p</p>
+                                 </li>
+                               </ul>
+                            </section>
+                        </div>
+
+                        <div class="settingGroup">
+                            <p id="viewSwitch" style="margin: 15px 0">
+                                <input type="checkbox" id="switchView"><label for="switchView">view movie section by title</label>
+                            </p>
+                        </div>
+                    </div>
+
+                </div><!-- End of Settings-->
+
+                <div data-role="page" id="mediaInfo" data-title="Details">
+                    
+                    <footer data-role="footer" id="toolbar" class="revealed">
+                        <nav>
+                            <ul>
+                                <li data-role="tabitem" data-page="videoSettingsTab">
+                                    <a href="#" id="videoSettingsBtn">
+                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
+                                        <span>Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </footer>
+
+                    <div id="infoMedia">
+                        <div id="infoCover">
+                            <img id="coverImage" src="">
+                            <button data-role="button" id="playMovie">Play</button>
+                        </div>
+                        <div id="infoStream">
+                            <div>
+                                <h2 id="titleInfo"></h2>
+                                <p id="yearInfo"></p>
+                            </div>
+                            <TABLE id="tableStreamInfos">
+                                <TR>
+                                    <TD class="tableCategory">RATING</TD>
+                                    <TD id="ratingInfo"></TD>
+                                </TR>
+                                <TR>
+                                    <TD class="tableCategory">GENRE</TD>
+                                    <TD id="genreInfo"></TD>
+                                </TR>
+                                <TR>
+                                    <TD class="tableCategory">VIDEO</TD>
+                                    <TD id="videoInfo"></TD>
+                                </TR>
+                                <TR>
+                                    <TD class="tableCategory">AUDIO</TD>
+                                    <TD id="audioInfo"></TD>
+                                </TR>
+                            </TABLE>
+                        </div>
+                    </div>
+                    <div id="infoText"></div>
+                </div><!-- End of MediaInfo-->
+
+                <div data-role="page" id="videoSettings" data-title="Video Settings">
+                    <div class="pageContainer">    
+                        <div class="settingGroup">
+                            <h2>Video Transcoding:</h2>
+                            <section data-role="option-selector" id="transcodingOptions2">
+                               <ul>
+                                 <li data-value="0" id="videoOs0">
+                                   <p>original</p>
+                                 </li>
+                                 <li data-value="1" id="videoOs1">
+                                   <p>simple (repack)</p>
+                                 </li>
+                                 <li data-value="2" id="videoOs2">
+                                   <p>2 Mbps 720p</p>
+                                 </li>
+                                 <li data-value="3" id="videoOs3">
+                                   <p>1.5 Mbps 480p</p>
+                                 </li>
+                                 <li data-value="4" id="videoOs4">
+                                   <p>720kbps 360p</p>
+                                 </li>
+                                 <li data-value="5" id="videoOs5">
+                                   <p>320kbps 360p</p>
+                                 </li>
+                               </ul>
+                            </section>
+                        </div>
+                    </div>
+
+                </div><!-- End of Settings-->
+
+            </div><!-- End of Pagestack-->
+
+            <div data-role="dialog" id="infoDialog">
+                <section>
+                    <p id="infoDialogText"><p/>
+                    </br>
+                    <p id="errorServer"></p>
+                    </br>
+                    <button data-role="button" id="closeDialog">close</button>
+                </section>
+            </div>
+
+            <div data-role="dialog" id="incorrectLogin">
+                <section>
+                    <p>Your login data seems to be incorrect!<p/>
+                    </br>
+                    <p id="errorServer"></p>
+                    </br>
+                    <button data-role="button" id="closeDialog">close</button>
+                </section>
+            </div>
+
+            <div data-role="dialog" id="deviceSelector">
+                <section>
+                    <h2>Select your device<h2/>
+                    </br>
+                    <section data-role="list" id="devices">
+                        <ul>
+                        </ul>
+                    </section>
+                    </br>
+                    <button data-role="button" id="closeDeviceSelector">cancel</button>
+                </section>
+            </div>
+
+            <div id="player-container">
+                <div id="switchPlayerVisability" class="image-go-up"></div>
+                <div id="playerBox">
+                    <div>
+                        <section data-role="list" id="playListHeader">
+                            <ul>
+                                <li>
+                                    <a href="#">Playlist</a>
+                                    <div class="removeFromPlaylist" id="clearPlayList"></div>
+                                </li>
+                            </ul>
+                        </section>
+                        <section data-role="list" id="playList">
+                            <ul>
+                                
+                            </ul>
+                        </section>
+                    </div>
+                    <!--<div id="playerPlayingTitle">
+                        <span>Playing: <span/><span id="playingTitle"><span/>
+
+                    </div>-->
+                    <video id="player" autoplay class="audioPlayer">
+                        <source id="playerSource" src="" type="audio/mp3"></source>
+                    </video>
+                    <div id="playerControls">
+                        <button id="playPauseBtn" class="play custom-controls" title="play"></button>
+                        <progress id="progressBar" max="100" value="0.00" class="custom-controls"></progress>
+                        <span id="timer" class="custom-controls">0:00:00</span>
+                        <button id="muteBtn" class="muted custom-controls" title="mute"></button>
+                        <input type="range" id="volume" min="0" max="1" step="0.01" class="custom-controls">
+                        <button id="fullscreenBtn" title="Fullscreen" class="start-fullscreen custom-controls"></button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- End of Content-->
+    </div>
+</body>
+</html>
+
