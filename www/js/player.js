@@ -6,7 +6,6 @@ function addToPlaylist(list_infos)
 {
     var playList = JSON.parse(localStorage.getItem("playList"));
     //console.debug("playList=", playList);
-    console.debug("addToPlaylist", list_infos.title);
 
     var alreadyInPlaylist = false;
     
@@ -250,6 +249,7 @@ function initPlayerControls() {
 
     // fade controls in fullscreenmode
     player.addEventListener("click", function() {
+        console.log("click fullscreenmode");
         if(document.webkitIsFullScreen && $("#playerControls").css("display") === "none") {
             $("#playerControls").fadeIn();
         } else if(document.webkitIsFullScreen) {
@@ -258,6 +258,17 @@ function initPlayerControls() {
     });
 }
 
+function resetPlayerControls()
+{
+    // player
+    document.getElementById("player").currentTime = 0;
+    // timer
+    document.getElementById("timer").innerHTML = "0:00:00";
+    // progressbar
+    var progressbar = document.getElementById("progressBar");
+    progressbar.value = "0";
+    $(progressbar).unbind();
+}
 
 /************************************/
 /*** CREATE PLAYER CONTROLS *********/
@@ -314,7 +325,8 @@ function createControls(player, list_infos, server) {
         }
     });
 
-    progressBar.addEventListener( "click", function(e) {
+    
+    $(progressBar).bind("click", function(e) {
         var directPlay = (localStorage.getItem("transcoding") === "0")? true : false;
         var percent = e.offsetX / this.offsetWidth;
         if(list_infos.mediatype === "track" || directPlay) {
@@ -389,7 +401,7 @@ function initPlaylistFunctions(UI)
         player.load();
 
         player.className = "audioPlayer";
-        initPlayerControls();
+        resetPlayerControls();
     });
 }
 
@@ -447,6 +459,13 @@ function addRemovePlaylistButton(elementKey)
             player.pause();
             source.src = "";
             player.load();
+
+            if(currentTitle.mediatype === "movie" || currentTitle.mediatype === "episode")
+            {
+                player.className = "audioPlayer";
+            }
+
+            resetPlayerControls();
         }
     });
 

@@ -17,7 +17,7 @@ function getPlexVersion(UI) {
             version = response.MediaContainer.version;
             localStorage.setItem("plexServerVersion", version);
             explore("init", UI, server());
-        } 
+        }
     };
     xhr.ontimeout = function() {
         openInfoDialog(UI, "Timeout: Could not identify your plex-server-version. Please check your connection settings.");
