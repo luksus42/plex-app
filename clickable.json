@@ -1,11 +1,5 @@
 {
-  "package": "plex.luksusdebug",
-  "app": "",
   "sdk": "ubuntu-sdk-15.04",
   "arch": "armhf",
-  "template": "pure",
-  "dir": "./build/",
-  "scripts": "",
-  "default": "",
-  "dependencies": ""
+  "template": "pure"
 }

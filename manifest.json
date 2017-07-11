@@ -1,6 +1,6 @@
 {
     "name": "plex-local.luksus",
-    "description": "",
+    "description": "Plex App for Ubuntu Touch",
     "architecture": "all",
     "title": "Plex",
     "hooks": {
