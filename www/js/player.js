@@ -66,6 +66,7 @@ function play(list_infos) {
     else
         player.className = "audioPlayer";
 
+    // open player
     if($("#playerBox").css("display") === "none") {
         $("#switchPlayerVisability").trigger("click");
     }

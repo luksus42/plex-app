@@ -153,7 +153,6 @@ Application.prototype.init = function() {
                 // local connection setting
                 getPlexVersion(UI);
             }
-            
         });
 
         osTranscode.onClicked(function(e) {

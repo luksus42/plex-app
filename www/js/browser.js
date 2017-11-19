@@ -341,69 +341,82 @@ function browse(target, list_infos, fromEvent) {
                             genres = genres + (genres.length > 0? ", " : "") + child.Genre[j].tag;
                         }
                         
+                        var elListInfos = {
+                            "element":child.type,
+                            "mediatype":child.type,
+                            "viewGroup": response.viewGroup,
+                            "key":child.key,
+                            "ratingKey": child.ratingKey,
+                            "title":child.title,
+                            "artist": (child.originalTitle ? child.originalTitle : ""),
+                            "year": (child.year? child.year : ""),
+                            "videoDetails": (details?
+                                                details.container +", "+
+                                                details.videoCodec +", "+
+                                                details.videoResolution +(details.videoResolution === "sd"? "" : "p")
+                                            : "nofile"),    
+                            "audioDetails": (details?
+                                                (details.audioProfile? (details.audioProfile === "es" ? "dts" : details.audioProfile) : details.audioCodec) +", "+
+                                                details.audioChannels +" channels"
+                                            : "nofile"),
+                            "genre": (details? genres : ""),
+                            "rating": (details? (child.rating? child.rating : "") : ""),
+                            "url": url+"/"+child.key+"/"+"folder",
+                            "server": server,
+                            "UI":UI,
+                           // "useAuth":localStorage.getItem("useAuth"),
+                            "download":(child.type !== "Directory")?
+                                details.Part[0].key : "nofile",
+                            "container":(child.type !== "Directory")?
+                                details.container : "nofile",
+                            "duration":(child.type !== "Directory")?
+                                (details.duration/1000) : 7200,
+                            "thumb": server+"/photo/:/transcode?url=http://127.0.0.1:"+localStorage.getItem("port")+child.thumb+"&width=300&height=300&X-Plex-Token="+localStorage.getItem("authToken"),
+                            "summary": child.summary,
+                            "media": child.Media
+                        };
 
-                        var el = list.append(
-                           child.title,
-                           details.container,
-                           elementId+"-"+i.toString(),
-                           browse,
-                           {
-                                "element":child.type,
-                                "mediatype":child.type,
-                                "viewGroup": response.viewGroup,
-                                "key":child.key,
-                                "ratingKey": child.ratingKey,
-                                "title":child.title,
-                                "artist": (child.originalTitle ? child.originalTitle : ""),
-                                "year": (child.year? child.year : ""),
-                                "videoDetails": (details?
-                                                    details.container +", "+
-                                                    details.videoCodec +", "+
-                                                    details.videoResolution +(details.videoResolution === "sd"? "" : "p")
-                                                : "nofile"),    
-                                "audioDetails": (details?
-                                                    (details.audioProfile? (details.audioProfile === "es" ? "dts" : details.audioProfile) : details.audioCodec) +", "+
-                                                    details.audioChannels +" channels"
-                                                : "nofile"),
-                                "genre": (details? genres : ""),
-                                "rating": (details? (child.rating? child.rating : "") : ""),
-                                "url": url+"/"+child.key+"/"+"folder",
-                                "server": server,
-                                "UI":UI,
-                               // "useAuth":localStorage.getItem("useAuth"),
-                                "download":(child.type !== "Directory")?
-                                    details.Part[0].key : "nofile",
-                                "container":(child.type !== "Directory")?
-                                    details.container : "nofile",
-                                "duration":(child.type !== "Directory")?
-                                    (details.duration/1000) : 7200,
-                                "thumb": server+"/photo/:/transcode?url=http://127.0.0.1:"+localStorage.getItem("port")+child.thumb+"&width=300&height=300&X-Plex-Token="+localStorage.getItem("authToken"),
-                                "summary": child.summary,
-                                "media": child.Media
-                            }
-                        );
+                        (function(elListInfos){
 
-                        var iconElem = document.createElement("aside");
-                        var imgElem = document.createElement("img");
+                            var el = list.append(
+                                child.title,
+                                details.container,
+                                elementId+"-"+i.toString(),
+                                browse,
+                                elListInfos
+                            );
+                        
 
-                        // set filetype icon
-                        if(child._elementType !== "Directory") {
-                            if (child.type === "track" ||
-                                child.type === "movie"  ||
-                                child.type === "episode"||
-                                child.type === "picture") {
+                            var iconElem = document.createElement("aside");
+                            var imgElem = document.createElement("img");
 
-                                imgElem.setAttribute("src", "img/"+child.type+".png");
+                            // set filetype icon
+                            if(child._elementType !== "Directory") {
+                                if (child.type === "track" ||
+                                    child.type === "movie"  ||
+                                    child.type === "episode"||
+                                    child.type === "picture") {
+
+                                    imgElem.setAttribute("src", "img/"+child.type+".png");
+                                } else {
+                                    imgElem.setAttribute("src", "img/document.png");
+                                }
                             } else {
-                                imgElem.setAttribute("src", "img/document.png");
+                                imgElem.setAttribute("src", "img/folder.png");
                             }
-                        } else {
-                            imgElem.setAttribute("src", "img/folder.png");
-                        }
 
-                        iconElem.className = "icon";
-                        iconElem.appendChild(imgElem);
-                        el.insertBefore(iconElem, el.firstChild);
+                            iconElem.className = "icon";
+                            iconElem.appendChild(imgElem);
+
+                            el.insertBefore(iconElem, el.firstChild);
+
+                            el.addEventListener("contextmenu", function(e){
+                                e.preventDefault();
+                                addToPlaylist(elData(elListInfos), server);
+                                dropAnimation("addedToPlaylistInfo", $(this));
+                                return false;
+                            });
+                        })(elListInfos);
                     }
                 }
             } else if (xhr.readyState == 4) {
@@ -438,3 +451,7 @@ function browse(target, list_infos, fromEvent) {
     }
 
 };
+
+function elData(data) {
+    return data;
+}

@@ -78,3 +78,24 @@ function toHHMMSS (timerSeconds) {
     if (seconds < 10) {seconds = "0"+seconds;}
     return hours+':'+minutes+':'+seconds;
 };
+
+function dropAnimation(id, elem) {
+    var dropElem = document.getElementById(id); 
+    var pos = elem.position().top == 0 ? 75 : elem.position().top+75;
+    
+    dropElem.style.height = elem.css("height");
+    dropElem.style.top = pos+"px";
+    dropElem.style.display = "block";
+    
+    var dropId = setInterval(frame, 30);
+    function frame() {
+      if (pos > $("#player-container").position().top) {
+        clearInterval(dropId);
+        dropElem.style.display = "none";
+        dropElem.style.top = "50px";
+      } else {
+        pos=pos+50;
+        dropElem.style.top = pos +"px"; 
+      }
+    }
+  }
