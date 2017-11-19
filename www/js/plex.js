@@ -101,8 +101,8 @@ function selectDevice(UI, devices) {
                 getPlexVersion(UI);
             },
             {
-                "remoteIP":$(devices[i]).find('Connection[local="0"]').attr('address'),
-                "remotePort":$(devices[i]).find('Connection[local="0"]').attr('port')
+                "remoteIP":$(devices[i]).find('Connection[address!=null]').attr('address'),
+                "remotePort":$(devices[i]).find('Connection[port!=null]').attr('port')
             }
         );
     }
