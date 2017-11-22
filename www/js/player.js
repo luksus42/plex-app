@@ -23,7 +23,8 @@ function addToPlaylist(list_infos)
     playList.push(list_infos)-1;
     localStorage.setItem("playList", JSON.stringify(playList));
 
-    
+    $("#playListHeader").find("a").html("Playlist ("+ (playList.length+1) +")");
+
     //update gui
     var el=list_infos.UI.list("#playList").append(
         (list_infos.artist != "" && list_infos.mediatype == "track" ? list_infos.artist + " - ": "") + list_infos.title,
@@ -403,6 +404,8 @@ function initPlaylistFunctions(UI)
 
         player.className = "audioPlayer";
         resetPlayerControls();
+
+        $("#playListHeader").find("a").html("Playlist (0)");
     });
 }
 
@@ -432,6 +435,8 @@ function initPlayListGui(UI)
             el.appendChild(rmButton);
         }
     });
+
+    $("#playListHeader").find("a").html("Playlist ("+ playList.length +")");
 }
 
 function addRemovePlaylistButton(elementKey)
@@ -450,6 +455,8 @@ function addRemovePlaylistButton(elementKey)
         // update GUI playlist
         var id = "#"+elementKey.replace(/\//g, '');
         $(id).remove();
+
+        $("#playListHeader").find("a").html("Playlist ("+ newPlayList.length +")");
 
         // if playing title is removed, stop and reset player
         var currentTitle = JSON.parse(localStorage.getItem("currentTitle"));

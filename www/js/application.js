@@ -6,6 +6,8 @@ Application.prototype.init = function() {
     if (this._uiContextClass && !this._initialized) {
         this._initialized = true;
         var UI = new this._uiContextClass();
+        // overwrite
+        UI.__setupPageAction = newSetupPageAction;
         UI.init();
 
         // init localstorage
@@ -53,6 +55,28 @@ Application.prototype.init = function() {
             if(UI.pagestack.currentPage() == "root") {
                 document.getElementById("refreshSection").style.display = "block";
             }
+        });
+
+        // check, if "add all titles from directory"-button has to be displayed 
+        // and re-add click handler for addAll-Button to trigger the list-elements of the current page:
+        UI.pagestack.onPageChanged(function(){
+            var page = $("#"+UI.pagestack.currentPage());
+            if(page.hasClass("hasFiles")) {
+                $("#addAll").css("display", "block");
+
+                $("#addAll").unbind();
+                $("#addAll").bind("click", function() {
+                    page.find("li").each(function() {
+                        if($(this).hasClass("file")) {
+                            $(this).trigger("contextmenu");
+                        }
+                    });
+                });
+            }
+            else {
+                $("#addAll").css("display", "none");
+            }
+            
         });
 
         UI.button("settingsBtn").click(function () {
@@ -192,7 +216,6 @@ Application.prototype.init = function() {
 Application.prototype.initialized = function() {
     return this._initialized;
 };
-
 
 
 

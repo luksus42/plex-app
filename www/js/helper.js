@@ -79,8 +79,16 @@ function toHHMMSS (timerSeconds) {
     return hours+':'+minutes+':'+seconds;
 };
 
+/**
+ * Moves an html-Element to the bottom of the page.
+ * @param {String} id id-attribute of the drop-Element
+ * @param {Object} elem element, where the drop should start
+ */
 function dropAnimation(id, elem) {
-    var dropElem = document.getElementById(id); 
+    var origDropElem = document.getElementById(id);
+    var dropElem = origDropElem.cloneNode(true);
+    insertAfter(dropElem, origDropElem);
+
     var pos = elem.position().top == 0 ? 75 : elem.position().top+75;
     
     dropElem.style.height = elem.css("height");
@@ -91,7 +99,7 @@ function dropAnimation(id, elem) {
     function frame() {
       if (pos > $("#player-container").position().top) {
         clearInterval(dropId);
-        dropElem.style.display = "none";
+        $(dropElem).remove();
         dropElem.style.top = "50px";
       } else {
         pos=pos+50;

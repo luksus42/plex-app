@@ -20,6 +20,7 @@
     <link href="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
 
     <!-- application js imports -->
+    <script src="js/toolkitCore.js"></script>
     <script src="js/application.js"></script>
     <script src="js/plex.js"></script>
     <script src="js/browser.js"></script>
@@ -66,6 +67,12 @@
                         <nav>
                             <ul>
                                 <li>
+                                    <a href="#" id="addAll">
+                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg" alt="no pic"/>
+                                        <span>add all</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="#" id="refreshSection">
                                         <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/reload.svg" alt="no pic"/>
                                         <span>refresh section</span>
@@ -77,14 +84,6 @@
                                         <span>Settings</span>
                                     </a>
                                 </li>
-                                <!--
-                                <li data-role="tabitem" data-page="playerTab">
-                                    <a href="#" id="playerBtn">
-                                        <img src="" alt="no pic"/>
-                                        <span>Player</span>
-                                    </a>
-                                </li>
-                                -->
                             </ul>
                         </nav>
                     </footer>
@@ -277,7 +276,7 @@
                         <section data-role="list" id="playListHeader">
                             <ul>
                                 <li>
-                                    <a href="#">Playlist</a>
+                                    <a href="#">Playlist (0)</a>
                                     <div class="removeFromPlaylist" id="clearPlayList"></div>
                                 </li>
                             </ul>
@@ -306,7 +305,7 @@
                 </div>
             </div>
 
-            <div id="addedToPlaylistInfo">
+            <div id="addedToPlaylistInfo" class="dropBox">
             </div>
 
         </div><!-- End of Content-->

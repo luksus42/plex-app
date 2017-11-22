@@ -127,7 +127,6 @@ function browse(target, list_infos, fromEvent) {
     var newPage = document.getElementById(elementId);
     var newList = document.getElementById("browser-"+elementId);
 
-
     if (list_infos.element === "Directory") {
         // create new page, only when it not already exists (same page already visited)
         if (newPage === null) {
@@ -204,6 +203,15 @@ function browse(target, list_infos, fromEvent) {
                     list_infos.plexContainerTotalSize = response.totalSize;
                     list_infos.loadedSize = loadedSize + response._children.length;
                     list_infos.page = newPage.id;
+
+
+                    if(response._children.length > 0) {
+                        $("#addAll").css("display", "block");
+                        $("#"+UI.pagestack.currentPage()).addClass("hasFiles");
+                    }
+                    else {
+                        $("#addAll").css("display", "none");
+                    }
 
                     for (var i=0; i<response._children.length; i++) {
                         var genres = "";
@@ -291,6 +299,14 @@ function browse(target, list_infos, fromEvent) {
                     list_infos.plexContainerTotalSize = response.MediaContainer.totalSize;
                     list_infos.loadedSize = loadedSize + DirectoryLength + MetadataLength;
                     list_infos.page = newPage.id;
+
+                    if(MetadataLength > 0) {
+                        $("#addAll").css("display", "block");
+                        $("#"+UI.pagestack.currentPage()).addClass("hasFiles");
+                    }
+                    else {
+                        $("#addAll").css("display", "none");
+                    }
 
                     // DIRECTORIES
                     for (var i=0; i<DirectoryLength; i++) {
@@ -385,7 +401,6 @@ function browse(target, list_infos, fromEvent) {
                                 browse,
                                 elListInfos
                             );
-                        
 
                             var iconElem = document.createElement("aside");
                             var imgElem = document.createElement("img");
@@ -410,7 +425,9 @@ function browse(target, list_infos, fromEvent) {
 
                             el.insertBefore(iconElem, el.firstChild);
 
-                            el.addEventListener("contextmenu", function(e){
+                            $(el).addClass("file");
+
+                            $(el).on("contextmenu", function(e){
                                 e.preventDefault();
                                 addToPlaylist(elData(elListInfos), server);
                                 dropAnimation("addedToPlaylistInfo", $(this));
@@ -418,6 +435,16 @@ function browse(target, list_infos, fromEvent) {
                             });
                         })(elListInfos);
                     }
+
+                    // add initital clickhandler for addAll-Button, after loading the list-elements
+                    $("#addAll").unbind();
+                    $("#addAll").bind("click", function() {
+                        $("#"+UI.pagestack.currentPage()).find("li").each(function() {                         
+                            if($(this).hasClass("file")) {
+                                $(this).trigger("contextmenu");
+                            }
+                        });
+                    });
                 }
             } else if (xhr.readyState == 4) {
                 openInfoDialog(UI, "Connection lost (?) or something different...");
@@ -449,9 +476,12 @@ function browse(target, list_infos, fromEvent) {
             play(list_infos);
         }
     }
-
-};
+}
 
 function elData(data) {
+    return data;
+}
+
+function addAllFiles(data) {
     return data;
 }
