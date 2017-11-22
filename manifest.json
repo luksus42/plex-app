@@ -9,7 +9,7 @@
             "desktop": "Plex.desktop"
         }
     },
-    "version": "0.3.3",
-    "maintainer": "Lukas Baubkus <lukas.baubkus@gmx.de>",
+    "version": "0.3.4",
+    "maintainer": "Lukas Baubkus <lukas42@posteo.de>",
     "framework": "ubuntu-sdk-15.04.5"
 }

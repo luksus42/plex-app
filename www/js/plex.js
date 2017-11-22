@@ -20,7 +20,10 @@ function getPlexVersion(UI) {
         }
     };
     xhr.ontimeout = function() {
-        openInfoDialog(UI, "Timeout: Could not identify your plex-server-version. Please check your connection settings.");
+        var msg = "Timeout: Could not identify your plex-server-version. Please check your connection settings.<br/><br/>";
+        msg = msg + "The request-url was: "+url+"<br/>";
+        msg = msg + "If the url has a local IP, and your not within your local network, then I could not identify your external IP-adress from the given device-selection-list.";
+        openInfoDialog(UI, msg);
     }
     xhr.send();
 }
@@ -41,7 +44,7 @@ function plexLogin(UI) {
     //xhr.setRequestHeader('Accept', 'application/json');
     xhr.setRequestHeader('Authorization', auth);
     xhr.setRequestHeader('X-Plex-Product', 'Plex Local'); // Plex app name, eg Laika, Plex Media Server, Media Link.
-    xhr.setRequestHeader('X-Plex-Version', '0.3.1'); // Plex app version number (any string?).
+    xhr.setRequestHeader('X-Plex-Version', '0.3.4'); // Plex app version number (any string?).
     xhr.setRequestHeader('X-Plex-Client-Identifier', localStorage.getItem("UUID")); // UUID, SN, or other number unique per device.
 
     xhr.onreadystatechange = function() {
@@ -88,7 +91,10 @@ function selectDevice(UI, devices) {
     deviceList.removeAllItems();
 
     for (var i=0; i<devices.length; i++) {
-       var el = deviceList.append(
+        var ip = $(devices[i]).find('Connection[local="0"]').attr('address');
+        var port = $(devices[i]).find('Connection[local="0"]').attr('port');
+
+        var el = deviceList.append(
             ($(devices[i]).attr('name')? $(devices[i]).attr('name') : 'Device'+i.toString()),
             null,
             "device"+"-"+i.toString(),
@@ -101,8 +107,8 @@ function selectDevice(UI, devices) {
                 getPlexVersion(UI);
             },
             {
-                "remoteIP":$(devices[i]).find('Connection[address!=null]').attr('address'),
-                "remotePort":$(devices[i]).find('Connection[port!=null]').attr('port')
+                "remoteIP": ip != undefined ? ip : $(devices[i]).find('Connection[address!=null]').attr('address'),
+                "remotePort": port != undefined ? port : $(devices[i]).find('Connection[port!=null]').attr('port')
             }
         );
     }
