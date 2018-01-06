@@ -195,10 +195,11 @@ function browse(target, list_infos, fromEvent) {
             if (xhr.readyState == 4 && xhr.status == 200) {
 
                 var response = JSON.parse(xhr.responseText);
+                var version = localStorage.getItem("plexServerVersion");
 
                 //console.debug(response._children[0].ratingKey);
 
-                if(localStorage.getItem("plexServerVersion") < 1.3) {
+                if(version < 1.3) {
 
                     list_infos.plexContainerTotalSize = response.totalSize;
                     list_infos.loadedSize = loadedSize + response._children.length;
@@ -291,149 +292,58 @@ function browse(target, list_infos, fromEvent) {
                         iconElem.appendChild(imgElem);
                         el.insertBefore(iconElem, el.firstChild);
                     }
-                } else {
-
+                } 
+                else {
                     var DirectoryLength = (response.MediaContainer.Directory ? response.MediaContainer.Directory.length : 0);
                     var MetadataLength = (response.MediaContainer.Metadata ? response.MediaContainer.Metadata.length : 0);
-
+                    
                     list_infos.plexContainerTotalSize = response.MediaContainer.totalSize;
-                    list_infos.loadedSize = loadedSize + DirectoryLength + MetadataLength;
                     list_infos.page = newPage.id;
 
-                    if(MetadataLength > 0) {
-                        $("#addAll").css("display", "block");
-                        $("#"+UI.pagestack.currentPage()).addClass("hasFiles");
+                    if(version.substr(0,1) > 0 && version.substr(2,4) > 9) {
+                        list_infos.loadedSize = loadedSize + DirectoryLength + MetadataLength;
+                        var hasFiles = false;
+
+                        for (var i=0; i<MetadataLength; i++) {
+                            child = response.MediaContainer.Metadata[i];
+                            if(!child.Media) {
+                                // DIRECTORIES
+                                putDirectories(child, i, list, elementId, server, UI);
+                            } 
+                            else {
+                                // FILES
+                                putFiles(child, i, response, list, elementId, server, UI, url);
+                                hasFiles = true;
+                            }
+                        }
+
+                        if(hasFiles) {
+                            $("#addAll").css("display", "block");
+                            $("#"+UI.pagestack.currentPage()).addClass("hasFiles");
+                        }
+                        else {
+                            $("#addAll").css("display", "none");
+                        }
                     }
                     else {
-                        $("#addAll").css("display", "none");
-                    }
+                        list_infos.loadedSize = loadedSize + DirectoryLength + MetadataLength;
 
-                    // DIRECTORIES
-                    for (var i=0; i<DirectoryLength; i++) {
-                        var child = response.MediaContainer.Directory[i];
-
-                        var el = list.append(
-                           child.title,
-                           null,
-                           elementId+"-"+i.toString(),
-                           browse,
-                           {
-                                "element":"Directory",
-                                "mediatype":child.type,
-                                "viewGroup": child.type,
-                                "key":child.key,
-                                "title":child.title,
-                                "url":server+"/library/sections/"+child.key+"/folder",
-                                "urlAll":server+"/library/sections/"+child.key+"/all?"
-                                            +(child.key == 3? "type=8" : "type=1"),
-                                "server":server,
-                                "UI":UI,
-                                "ratingKey": child.key
-                                //"useAuth":localStorage.getItem("useAuth")
-                            }
-                        );
-
-                        var iconElem = document.createElement("aside");
-                        var imgElem = document.createElement("img");
-
-                        // set filetype icon
-                        imgElem.setAttribute("src", "img/folder.png");
-                        
-                        iconElem.className = "icon";
-                        iconElem.appendChild(imgElem);
-                        el.insertBefore(iconElem, el.firstChild);
-                    }
-
-                    // FILES
-                    for (var i=0; i<MetadataLength; i++) {
-                        var genres = "";
-                        var child = response.MediaContainer.Metadata[i];
-                        var details;
-
-                        details = child.Media[0];
-                        // get list of genres
-                        var genreLength = child.Genre ? child.Genre.length : 0;
-                        for(var j=0; j<genreLength; j++) {
-                            genres = genres + (genres.length > 0? ", " : "") + child.Genre[j].tag;
+                        if(MetadataLength > 0) {
+                            $("#addAll").css("display", "block");
+                            $("#"+UI.pagestack.currentPage()).addClass("hasFiles");
                         }
-                        
-                        var elListInfos = {
-                            "element":child.type,
-                            "mediatype":child.type,
-                            "viewGroup": response.viewGroup,
-                            "key":child.key,
-                            "ratingKey": child.ratingKey,
-                            "title":child.title,
-                            "artist": (child.originalTitle ? child.originalTitle : ""),
-                            "year": (child.year? child.year : ""),
-                            "videoDetails": (details?
-                                                details.container +", "+
-                                                details.videoCodec +", "+
-                                                details.videoResolution +(details.videoResolution === "sd"? "" : "p")
-                                            : "nofile"),    
-                            "audioDetails": (details?
-                                                (details.audioProfile? (details.audioProfile === "es" ? "dts" : details.audioProfile) : details.audioCodec) +", "+
-                                                details.audioChannels +" channels"
-                                            : "nofile"),
-                            "genre": (details? genres : ""),
-                            "rating": (details? (child.rating? child.rating : "") : ""),
-                            "url": url+"/"+child.key+"/"+"folder",
-                            "server": server,
-                            "UI":UI,
-                           // "useAuth":localStorage.getItem("useAuth"),
-                            "download":(child.type !== "Directory")?
-                                details.Part[0].key : "nofile",
-                            "container":(child.type !== "Directory")?
-                                details.container : "nofile",
-                            "duration":(child.type !== "Directory")?
-                                (details.duration/1000) : 7200,
-                            "thumb": server+"/photo/:/transcode?url=http://127.0.0.1:"+localStorage.getItem("port")+child.thumb+"&width=300&height=300&X-Plex-Token="+localStorage.getItem("authToken"),
-                            "summary": child.summary,
-                            "media": child.Media
-                        };
+                        else {
+                            $("#addAll").css("display", "none");
+                        }
 
-                        (function(elListInfos){
-
-                            var el = list.append(
-                                child.title,
-                                details.container,
-                                elementId+"-"+i.toString(),
-                                browse,
-                                elListInfos
-                            );
-
-                            var iconElem = document.createElement("aside");
-                            var imgElem = document.createElement("img");
-
-                            // set filetype icon
-                            if(child._elementType !== "Directory") {
-                                if (child.type === "track" ||
-                                    child.type === "movie"  ||
-                                    child.type === "episode"||
-                                    child.type === "picture") {
-
-                                    imgElem.setAttribute("src", "img/"+child.type+".png");
-                                } else {
-                                    imgElem.setAttribute("src", "img/document.png");
-                                }
-                            } else {
-                                imgElem.setAttribute("src", "img/folder.png");
-                            }
-
-                            iconElem.className = "icon";
-                            iconElem.appendChild(imgElem);
-
-                            el.insertBefore(iconElem, el.firstChild);
-
-                            $(el).addClass("file");
-
-                            $(el).on("contextmenu", function(e){
-                                e.preventDefault();
-                                addToPlaylist(elData(elListInfos), server);
-                                dropAnimation("addedToPlaylistInfo", $(this));
-                                return false;
-                            });
-                        })(elListInfos);
+                        // DIRECTORIES
+                        for (var i=0; i<DirectoryLength; i++) {
+                            putDirectories(response.MediaContainer.Directory[i], elementId, server, UI);
+                        }
+                        // FILES
+                        for (var i=0; i<MetadataLength; i++) {
+                            putFiles(response.MediaContainer.Metadata[i], response, list, elementId, server, UI);
+                        }
                     }
 
                     // add initital clickhandler for addAll-Button, after loading the list-elements
@@ -484,4 +394,128 @@ function elData(data) {
 
 function addAllFiles(data) {
     return data;
+}
+
+function putDirectories(child, i, list, elementId, server, UI) {
+    var el = list.append(
+        child.title,
+        null,
+        elementId+"-"+i.toString(),
+        browse,
+        {
+                "element":"Directory",
+                "mediatype":child.type,
+                "viewGroup": child.type,
+                "key":child.key,
+                "title":child.title,
+                "url":server+"/library/sections/"+child.key+"/folder",
+                "urlAll":server+"/library/sections/"+child.key+"/all?"
+                            +(child.key == 3? "type=8" : "type=1"),
+                "server":server,
+                "UI":UI,
+                "ratingKey": child.key
+                //"useAuth":localStorage.getItem("useAuth")
+            }
+        );
+
+        var iconElem = document.createElement("aside");
+        var imgElem = document.createElement("img");
+
+        // set filetype icon
+        imgElem.setAttribute("src", "img/folder.png");
+        
+        iconElem.className = "icon";
+        iconElem.appendChild(imgElem);
+        el.insertBefore(iconElem, el.firstChild);
+}
+
+function putFiles(child, i, response, list, elementId, server, UI, url) {
+    var genres = "";
+    //var child = response.MediaContainer.Metadata[i];
+    var details;
+
+    details = child.Media[0];
+    // get list of genres
+    var genreLength = child.Genre ? child.Genre.length : 0;
+    for(var j=0; j<genreLength; j++) {
+        genres = genres + (genres.length > 0? ", " : "") + child.Genre[j].tag;
+    }
+    
+    var elListInfos = {
+        "element":child.type,
+        "mediatype":child.type,
+        "viewGroup": response.viewGroup,
+        "key":child.key,
+        "ratingKey": child.ratingKey,
+        "title":child.title,
+        "artist": (child.originalTitle ? child.originalTitle : ""),
+        "year": (child.year? child.year : ""),
+        "videoDetails": (details?
+                            details.container +", "+
+                            details.videoCodec +", "+
+                            details.videoResolution +(details.videoResolution === "sd"? "" : "p")
+                        : "nofile"),    
+        "audioDetails": (details?
+                            (details.audioProfile? (details.audioProfile === "es" ? "dts" : details.audioProfile) : details.audioCodec) +", "+
+                            details.audioChannels +" channels"
+                        : "nofile"),
+        "genre": (details? genres : ""),
+        "rating": (details? (child.rating? child.rating : "") : ""),
+        "url": url+"/"+child.key+"/"+"folder",
+        "server": server,
+        "UI":UI,
+        // "useAuth":localStorage.getItem("useAuth"),
+        "download":(child.type !== "Directory")?
+            details.Part[0].key : "nofile",
+        "container":(child.type !== "Directory")?
+            details.container : "nofile",
+        "duration":(child.type !== "Directory")?
+            (details.duration/1000) : 7200,
+        "thumb": server+"/photo/:/transcode?url=http://127.0.0.1:"+localStorage.getItem("port")+child.thumb+"&width=300&height=300&X-Plex-Token="+localStorage.getItem("authToken"),
+        "summary": child.summary,
+        "media": child.Media
+    };
+
+    (function(elListInfos){
+
+        var el = list.append(
+            child.title,
+            details.container,
+            elementId+"-"+i.toString(),
+            browse,
+            elListInfos
+        );
+
+        var iconElem = document.createElement("aside");
+        var imgElem = document.createElement("img");
+
+        // set filetype icon
+        if(child._elementType !== "Directory") {
+            if (child.type === "track" ||
+                child.type === "movie"  ||
+                child.type === "episode"||
+                child.type === "picture") {
+
+                imgElem.setAttribute("src", "img/"+child.type+".png");
+            } else {
+                imgElem.setAttribute("src", "img/document.png");
+            }
+        } else {
+            imgElem.setAttribute("src", "img/folder.png");
+        }
+
+        iconElem.className = "icon";
+        iconElem.appendChild(imgElem);
+
+        el.insertBefore(iconElem, el.firstChild);
+
+        $(el).addClass("file");
+
+        $(el).on("contextmenu", function(e){
+            e.preventDefault();
+            addToPlaylist(elData(elListInfos), server);
+            dropAnimation(this);
+            return false;
+        });
+    })(elListInfos);
 }

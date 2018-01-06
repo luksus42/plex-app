@@ -84,14 +84,14 @@ function toHHMMSS (timerSeconds) {
  * @param {String} id id-attribute of the drop-Element
  * @param {Object} elem element, where the drop should start
  */
-function dropAnimation(id, elem) {
-    var origDropElem = document.getElementById(id);
-    var dropElem = origDropElem.cloneNode(true);
-    insertAfter(dropElem, origDropElem);
+function dropAnimation(elem) {
+    var dropElem = elem.cloneNode(true);
+    dropElem.style.position = "absolute";
+    insertAfter(dropElem, elem);
 
-    var pos = elem.position().top == 0 ? 75 : elem.position().top+75;
+    var pos = $(elem).position().top == 0 ? 75 : $(elem).position().top+75;
     
-    dropElem.style.height = elem.css("height");
+    dropElem.style.height = $(elem).css("height");
     dropElem.style.top = pos+"px";
     dropElem.style.display = "block";
     

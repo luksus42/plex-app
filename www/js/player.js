@@ -23,7 +23,7 @@ function addToPlaylist(list_infos)
     playList.push(list_infos)-1;
     localStorage.setItem("playList", JSON.stringify(playList));
 
-    $("#playListHeader").find("a").html("Playlist ("+ (playList.length+1) +")");
+    $("#playListHeader").find("a").html("Playlist ("+ (playList.length) +")");
 
     //update gui
     var el=list_infos.UI.list("#playList").append(
