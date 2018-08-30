@@ -179,6 +179,10 @@ Application.prototype.init = function() {
             }
         });
 
+        // UI.button("search").click(function() {
+        //     console.log(browserList);
+        // });
+
         osTranscode.onClicked(function(e) {
             transcodingOption = e.values;
         });
@@ -201,21 +205,48 @@ Application.prototype.init = function() {
             }
         });
 
+        // button click events for audio and sub selection
+        UI.button("selectAudio").click(function() {
+            var sSelector = $("#subStreamSelector");
+            var aSelector = $("#audioStreamSelector");
+            if(aSelector.css("display") == "none") {
+                aSelector.css("display", "block");
+                sSelector.css("display", "none");
+                $(this).addClass("selectButtonActive");
+                $("#selectSubtitle").removeClass("selectButtonActive");
+            }
+            else
+            {
+                $(this).removeClass("selectButtonActive");
+                aSelector.css("display", "none");
+            }
+        });
+        UI.button("selectSubtitle").click(function() {
+            var sSelector = $("#subStreamSelector");
+            var aSelector = $("#audioStreamSelector");
+            if(sSelector.css("display") == "none") {
+                sSelector.css("display", "block");
+                aSelector.css("display", "none");
+                $(this).addClass("selectButtonActive");
+                $("#selectAudio").removeClass("selectButtonActive");
+            }
+            else
+            {
+                $(this).removeClass("selectButtonActive");
+                sSelector.css("display", "none");
+            }
+        });
+
         // start browsing immediately, when in settings local connection is enabled:
         if (localStorage.getItem("useAuth") === "false") {
             getPlexVersion(UI);
         }
 
         initPlayerControls();
-
         initPlaylistFunctions(UI);
-
         initPlayListGui(UI);
     }
 };
 Application.prototype.initialized = function() {
     return this._initialized;
 };
-
-
-

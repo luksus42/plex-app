@@ -381,11 +381,65 @@ function browse(target, list_infos, fromEvent) {
                 addToPlaylist(list_infos, server);
                 play(list_infos);
             });
+
+            // populate audio and sub optionselectors
+            setStreamOptions(UI, list_infos.key);
+
         } else {
             addToPlaylist(list_infos, server);
             play(list_infos);
         }
     }
+}
+
+function setStreamOptions(UI, key) {
+    var streamDetails;
+
+    // pull media Info
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', server()+key, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.timeout = 3000;
+    if (localStorage.getItem("useAuth") === "true") {
+        xhr.setRequestHeader('X-Plex-Token', localStorage.getItem("authToken"));
+    }
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            streamDetails = response.MediaContainer.Metadata[0].Media[0].Part[0].Stream;
+            
+            var audioSelector = $("#audioStreamSelector ul");
+            var subSelector = $("#subStreamSelector ul");
+            var x = 0;
+            var y = 0
+
+            // clear ul
+            audioSelector.empty();
+            subSelector.empty();
+
+            for (var i=0; i < streamDetails.length; i++) {
+                var stream = streamDetails[i];
+                // audio stream
+                if(stream.streamType === 2)
+                {
+                    audioSelector.append($("<li>").attr("data-value", x).attr("class", stream.selected ? "active": "")
+                                    .append($("<p>").text(stream.displayTitle)));
+                    x++;
+                }
+                // sub stream
+                if(stream.streamType === 3)
+                {
+                    subSelector.append($("<li>").attr("data-value", y)
+                                    .append($("<p>").text(stream.displayTitle)));
+                    y++;
+                }
+            }
+
+            UI.optionselector("audioStreamSelector", true, false);
+            UI.optionselector("subStreamSelector", true, false);
+        }
+    };
+    xhr.send();
 }
 
 function elData(data) {

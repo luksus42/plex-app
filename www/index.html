@@ -17,7 +17,7 @@
         Ubuntu provides building blocks that you can use in your application. For more information, you can check out the documentation at http://design.ubuntu.com/apps.
      -->
     <!-- Ubuntu UI Style imports - Ambiance theme -->
-    <link href="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
+    <link href="../ubuntu-html5-ui-toolkit/0.1/ambiance/css/appTemplate.css" rel="stylesheet" type="text/css" />
 
     <!-- application js imports -->
     <script src="js/toolkitCore.js"></script>
@@ -31,21 +31,21 @@
     <script src="js/jquery-ui.min.js"></script>
 
     <!-- External javascript imports -->
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/fast-buttons.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/core.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/buttons.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/dialogs.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/page.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/pagestacks.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/tab.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/tabs.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/list.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/toolbars.js"></script>
-    <script src="/usr/share/ubuntu-html5-ui-toolkit/0.1/ambiance/js/option-selector.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/fast-buttons.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/core.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/buttons.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/dialogs.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/page.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/pagestacks.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/tab.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/tabs.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/list.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/toolbars.js"></script>
+    <script src="../ubuntu-html5-ui-toolkit/0.1/ambiance/js/option-selector.js"></script>
 
 </head>
 <body>
-
+    <div class="blur"></div>
     <div data-role="mainview">
 
         <header data-role="header">
@@ -66,21 +66,27 @@
                     <footer data-role="footer" id="toolbar" class="revealed">
                         <nav>
                             <ul>
+                                <!-- <li>
+                                    <a href="#" id="search">
+                                        <img src="img/ubuntu-mobile/actions/scalable/search.svg" alt="no pic"/>
+                                        <span>search</span>
+                                    </a>
+                                </li> -->
                                 <li>
                                     <a href="#" id="addAll">
-                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/add.svg" alt="no pic"/>
+                                        <img src="img/ubuntu-mobile/actions/scalable/add.svg" alt="no pic"/>
                                         <span>add all</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" id="refreshSection">
-                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/reload.svg" alt="no pic"/>
+                                        <img src="img/ubuntu-mobile/actions/scalable/reload.svg" alt="no pic"/>
                                         <span>refresh section</span>
                                     </a>
                                 </li>
                                 <li data-role="tabitem" data-page="settingsTab">
                                     <a href="#" id="settingsBtn">
-                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
+                                        <img src="img/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
                                         <span>Settings</span>
                                     </a>
                                 </li>
@@ -96,7 +102,7 @@
                             <ul>
                                 <li>
                                     <a href="#" id="save">
-                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/save.svg" alt="no pic"/>
+                                        <img src="img/ubuntu-mobile/actions/scalable/save.svg" alt="no pic"/>
                                         <span>save</span>
                                     </a>
                                 </li>
@@ -156,13 +162,13 @@
                 </div><!-- End of Settings-->
 
                 <div data-role="page" id="mediaInfo" data-title="Details">
-                    
+
                     <footer data-role="footer" id="toolbar" class="revealed">
                         <nav>
                             <ul>
                                 <li data-role="tabitem" data-page="videoSettingsTab">
                                     <a href="#" id="videoSettingsBtn">
-                                        <img src="/usr/share/icons/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
+                                        <img src="img/ubuntu-mobile/actions/scalable/settings.svg" alt="no pic"/>
                                         <span>Settings</span>
                                     </a>
                                 </li>
@@ -173,7 +179,7 @@
                     <div id="infoMedia">
                         <div id="infoCover">
                             <img id="coverImage" src="">
-                            <button data-role="button" id="playMovie">Play</button>
+                            <button data-role="button" id="playMovie">PLAY</button>
                         </div>
                         <div id="infoStream">
                             <div>
@@ -198,13 +204,25 @@
                                     <TD id="audioInfo"></TD>
                                 </TR>
                             </TABLE>
+                            <div id="streamSettings">
+                                <button data-role="button" class="streamSelectBtn" id="selectAudio">AUDIO</button>
+                                <button data-role="button" class="streamSelectBtn" id="selectSubtitle">SUBS</button>
+                                <section data-role="option-selector" class="streamOptionSelector" id="audioStreamSelector">
+                                    <ul>
+                                    </ul>
+                                </section>
+                                <section data-role="option-selector" class="streamOptionSelector" id="subStreamSelector">
+                                    <ul>audioStreamSelector
+                                    </ul>
+                                </section>
+                            </div>
                         </div>
                     </div>
                     <div id="infoText"></div>
                 </div><!-- End of MediaInfo-->
 
                 <div data-role="page" id="videoSettings" data-title="Video Settings">
-                    <div class="pageContainer">    
+                    <div class="pageContainer">
                         <div class="settingGroup">
                             <h2>Video Transcoding:</h2>
                             <section data-role="option-selector" id="transcodingOptions2">
@@ -283,7 +301,7 @@
                         </section>
                         <section data-role="list" id="playList">
                             <ul>
-                                
+
                             </ul>
                         </section>
                     </div>
@@ -291,9 +309,11 @@
                         <span>Playing: <span/><span id="playingTitle"><span/>
 
                     </div>-->
-                    <video id="player" autoplay class="audioPlayer">
-                        <source id="playerSource" src="" type="audio/mp3"></source>
-                    </video>
+                    <div class="centerContent">
+                        <video id="player" autoplay class="audioPlayer">
+                            <source id="playerSource" src="" type="audio/mp3"></source>
+                        </video>
+                    </div>
                     <div id="playerControls">
                         <button id="playPauseBtn" class="play custom-controls" title="play"></button>
                         <progress id="progressBar" max="100" value="0.00" class="custom-controls"></progress>
@@ -312,4 +332,3 @@
     </div>
 </body>
 </html>
-

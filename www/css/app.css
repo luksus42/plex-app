@@ -35,6 +35,10 @@
     max-width: 100% !important;
 }
 
+[data-role="content"] {
+    padding-top: 62px !important;
+}
+
 [data-role="page"] {
     padding-bottom: 20px;
 }
@@ -47,11 +51,22 @@
     color: #b5b5b5 !important;
 }
 
-body,
-[data-role="content"],
+[data-role="back-btn"]:disabled + [data-role="tabtitle"],
+[data-role="back-btn"] + [data-role="tabtitle"],
+[data-role="tabs-btn"] + [data-role="tabtitle"],
+[data-role="tabs"] + [data-role="tabtitle"] {
+    width: calc(100% - 175px) !important;
+}
+
 [data-role="list"] ul li > a,
 [data-role="list"] ul li > label {
-    background-color: #252525 !important;
+    background-color: #00000000 !important;
+    color: #b5b5b5 !important;
+}
+
+body,
+[data-role="content"] {
+    background-color: #00000000 !important;
     color: #b5b5b5 !important;
 }
 
@@ -64,17 +79,25 @@ p,
 }
 
 [data-role="option-selector"] li {
-    border-top: 1px solid #505050 !important;
+    border-top: 1px solid #cc7b19 !important;
 }
 
 [data-role="option-selector"] {
-    -webkit-box-shadow: inset 0 2px 2px 0 #828282 !important;
+    /*-webkit-box-shadow: inset 0 2px 2px 0 #828282 !important;*/
     box-shadow: inset 0 2px 2px 0 #828282 !important;
-    border-color: #505050 !important;
+    border-color: #cc7b19 !important;
+    -webkit-box-shadow: none !important;
+    background: #1a1a1ade !important;
+    border-radius: 0px !important;
 }
 
 [data-role="option-selector"] li:first-child {
     border-top: 0 !important;
+}
+
+[data-role="option-selector"] li p
+{
+    font-size: 0.8rem !important;
 }
 
 [data-role="list"],
@@ -83,7 +106,7 @@ p,
 }
 
 [data-role="list"] ul li {
-    border-bottom: solid 0.1rem #333333 !important;
+    border-bottom: solid 0.01rem #3e3e3e !important;
 }
 
 input {
@@ -148,6 +171,7 @@ input {
 [data-role="header"]:after {
     background: #cc7b19 !important;
     border-top: 1px solid #B16B17 !important;
+    height: 1px !important;
 }
 
 .audioPlayer {
@@ -157,22 +181,37 @@ input {
 }
 
 .videoPlayer {
-    /*height: 56%;*/
     width: 100%;
     background: url(../img/ajax-loader.gif) no-repeat center #000000;
     margin-bottom: -3px;
 }
 
+@media screen and (orientation:landscape) {
+  video {
+    height: 40vh;
+  }
+}
+@media screen and (orientation:portrait) {
+    video {
+      height: auto;
+    }
+  }
+
 #playerBox {
     display: none;
     /*border-top: 0.1rem solid #cc7b19;*/
+    background-color: #000000ab;
+}
+
+.centerContent {
+    text-align: center;
 }
 
 .settingGroup {
     margin-top: 0.5rem;
     margin-bottom: 1.0rem;
     padding-bottom: 1rem;
-    border-bottom: solid 0.1rem #505050;
+    border-bottom: solid 0.1rem #cc7b19;
 }
 
 [data-role="dialog"] {
@@ -232,12 +271,12 @@ progress[value]::-webkit-progress-value {
 }
 
 .play {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/media-playback-start.svg) no-repeat center;
+    background: url(../img/ubuntu-mobile/actions/scalable/media-playback-start.svg) no-repeat center;
     background-size: 24px;
 }
 
 .pause {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/media-playback-pause.svg) no-repeat center;
+    background: url(../img/ubuntu-mobile/actions/scalable/media-playback-pause.svg) no-repeat center;
     background-size: 24px;
 }
 
@@ -289,20 +328,20 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .start-fullscreen {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/view-fullscreen.svg) no-repeat center #1b1b1b;
+    background: url(../img/ubuntu-mobile/actions/scalable/view-fullscreen.svg) no-repeat center #1b1b1b;
 }
 
 .end-fullscreen {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/view-restore.svg) no-repeat center #1b1b1b;
+    background: url(../img/ubuntu-mobile/actions/scalable/view-restore.svg) no-repeat center #1b1b1b;
 }
 
 .unmuted {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/speaker.svg) no-repeat center;
+    background: url(../img/ubuntu-mobile/actions/scalable/speaker.svg) no-repeat center;
     background-size: 24px;
 }
 
 .muted {
-    background: url(/usr/share/icons/ubuntu-mobile/actions/scalable/speaker-mute.svg) no-repeat center;
+    background: url(../img/ubuntu-mobile/actions/scalable/speaker-mute.svg) no-repeat center;
     background-size: 24px;
 }
 
@@ -321,6 +360,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 100% !important;
     bottom: 0px;
     z-index: 10;
+    max-height: 90vh;
 }
 
 #switchPlayerVisability {
@@ -331,15 +371,15 @@ input[type=range]::-webkit-slider-thumb {
     left: 40%;
     /*border: solid 0.1rem #cc7b19;*/
     border-bottom: none;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 4px 4px 0px 0px;
 }
 
 .image-go-up {
-    background: url(../img/go-up.png) no-repeat center #DADADA;
+    background: url(../img/go-up.png) no-repeat center #b7b6b6de;
 }
 
 .image-go-down {
-    background: url(../img/go-down.png) no-repeat center #DADADA;
+    background: url(../img/go-down.png) no-repeat center #b7b6b6de;
 }
 
 #playerPlayingTitle {
@@ -357,7 +397,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 [data-role="list"] .playingTitle {
-    background: #544e46;
+    background: #544e468a;
 }
 
 [data-role="list"] .playListTitle > a {
@@ -367,7 +407,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #playListHeader ul li {
-    background: #dadada;
+    background: #eaeaeaad;
     border: none !important;
 }
 
@@ -390,7 +430,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 3rem;
     height: inherit;
     float: right;
-    background: transparent url(/usr/share/icons/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.8rem;
+    background: transparent url(../img/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.8rem;
     background-size: 40% 40%;
     position: absolute;
     right: 0rem;
@@ -400,6 +440,7 @@ input[type=range]::-webkit-slider-thumb {
     padding: 7px 10px 10px 10px;
     overflow: overlay;
     font-size: 0.9rem;
+    min-height: 80vh;
 }
 
 #infoMedia {
@@ -420,6 +461,42 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 0;
     width: 100%;
     margin-top: -3px;
+}
+
+#streamSettings {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    bottom: -11.5rem;
+    height: 15em;
+    z-index: 5;
+}
+
+.streamSelectBtn {
+    border-radius: 0 !important;
+    min-width: 15% !important;
+    width: 45%;
+    margin-top: -3px;
+    font-size: 90% !important;
+    float: left;
+    margin-left: 4px !important;
+}
+
+.selectButtonActive {
+    background-color: #008ec3 !important;
+}
+
+.streamOptionSelector {
+    top: 0px;
+    position: relative;
+    width: 91% !important;
+    margin-left: 4px !important;
+    display: none;
+    border-color: #008ec3 !important;
+}
+
+.streamOptionSelector li {
+    border-color: #008ec3 !important;
 }
 
 #coverImage {
@@ -452,14 +529,14 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #playList ul li > a:after {
-    /*background: transparent url(/usr/share/icons/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.5rem !important;
+    /*background: transparent url(../img/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.5rem !important;
     background-size: 50% 50% !important;
     top: 60% !important;*/
     content: none;
 }
 
 #playList {
-    background: #424141 !important;
+    background: #42414100 !important;
     max-height: 300px;
     overflow-y: scroll;
 }
@@ -477,4 +554,19 @@ input[type=range]::-webkit-slider-thumb {
 
 #addAll {
     display: none;
+}
+
+.blur {
+    transform: translate(0px, 0px, 0px);
+    background-image: linear-gradient(to top, rgba(24, 33, 39, 0.96) 0%, rgba(33, 27, 17, 0.77) 33%, rgba(23, 41, 38, 0.86) 62%, rgba(26, 40, 47, 0.86) 80%) !important;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* -webkit-filter: blur(20px); */
+    /* -o-filter: blur(20px); */
+    filter: blur(60px);
+    top: -70px;
+    right: -70px;
+    left: -70px;
+    padding: 70px;
 }

@@ -8,7 +8,7 @@ function addToPlaylist(list_infos)
     //console.debug("playList=", playList);
 
     var alreadyInPlaylist = false;
-    
+
     playList.forEach(function(elem, idx, array) {
         if(elem.key === list_infos.key)
         {
@@ -46,7 +46,7 @@ function addToPlaylist(list_infos)
 
 function play(list_infos) {
     //console.debug(list_infos);
-    var player = document.getElementById("player");   
+    var player = document.getElementById("player");
     var server = list_infos.server;
 
     // stop player and remove source, with workaround that the "download-session" will be closed
@@ -199,6 +199,8 @@ function streamOptions(list_infos, offset) {
         +(fulltranscode === 1? "&maxVideoBitrate="+vBitrate : "")
         +(fulltranscode === 1? "&videoQuality="+vQuali : "")
         +(fulltranscode === 1? "&videoResolution="+vRes  : "")
+        +"&subtitleSize=100"
+        +"&subtitles=auto"
         +"&X-Plex-Platform=Chrome"
         +(localStorage.getItem("useAuth") === "true"? "&X-Plex-Token="+localStorage.getItem("authToken") : "");
 
@@ -222,7 +224,7 @@ function initPlayerControls() {
     volume.addEventListener("input", function() {
         player.volume = volume.value;
     });
-    
+
     var muteBtn = document.getElementById("muteBtn");
     //muteBtn.id = "muteBtn";
     muteBtn.className = "unmuted custom-controls";
@@ -251,7 +253,7 @@ function initPlayerControls() {
 
     // fade controls in fullscreenmode
     player.addEventListener("click", function() {
-        console.log("click fullscreenmode");
+        //console.log("click fullscreenmode");
         if(document.webkitIsFullScreen && $("#playerControls").css("display") === "none") {
             $("#playerControls").fadeIn();
         } else if(document.webkitIsFullScreen) {
@@ -327,7 +329,7 @@ function createControls(player, list_infos, server) {
         }
     });
 
-    
+
     $(progressBar).bind("click", function(e) {
         var directPlay = (localStorage.getItem("transcoding") === "0")? true : false;
         var percent = e.offsetX / this.offsetWidth;
@@ -428,7 +430,7 @@ function initPlayListGui(UI)
             $(el).find("a").bind("click", function() {
                 play(elem);
             });
-            
+
             // add remove Button and click-Listener
             var rmButton = addRemovePlaylistButton(elem.key);
 
@@ -444,14 +446,14 @@ function addRemovePlaylistButton(elementKey)
     var rmButton = document.createElement("div");
     rmButton.className = "removeFromPlaylist";
     rmButton.addEventListener("click", function(e){
-        
+
         // update storage playlist
         var thisPlayList = JSON.parse(localStorage.getItem("playList"));
         var newPlayList = thisPlayList.filter(function(el) {
             return el.key !== elementKey;
         });
         localStorage.setItem("playList", JSON.stringify(newPlayList));
-        
+
         // update GUI playlist
         var id = "#"+elementKey.replace(/\//g, '');
         $(id).remove();

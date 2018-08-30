@@ -28,7 +28,7 @@ var newSetupPageAction = function(oldFooter, parent) {
     newActionsBarWrapper.setAttribute("data-role", "actions-wrapper");
     newActionsBarWrapper.setAttribute("id", "actions_" + this._oldFooterParent.id);
 
-    if (actionButtons.length > 3) {
+    if (actionButtons.length > 4) {
         // Maintain the first then replace the rest with an action overflow
         var firstAction = actionButtons[0],
             overflowList = document.createElement('ul'),
@@ -79,11 +79,12 @@ var newSetupPageAction = function(oldFooter, parent) {
 
         firstButton.setAttribute('id', firstId);
         document.styleSheets[0].addRule('#' + firstId + ':after', 'background-image: url("' + firstIcon + '");');
-
         newActionsBarWrapper.appendChild(firstButton);
+
         secondButton.setAttribute('id', secondId);
         document.styleSheets[0].addRule('#' + secondId + ':after', 'background-image: url("' + secondIcon + '");');
         newActionsBarWrapper.appendChild(secondButton);
+
         newActionsBarWrapper.appendChild(overflowButton);
         newActionsBarWrapper.appendChild(overflowList);
 
@@ -102,7 +103,13 @@ var newSetupPageAction = function(oldFooter, parent) {
                 actionButton_id = actionButtons[y].querySelector('a').getAttribute('id');
 
             actionButton.setAttribute('id', actionButton_id);
-            document.styleSheets[0].addRule('#' + actionButton_id + ':after', 'background-image: url("' + actionButton_icon + '");');
+            
+            //document.styleSheets[1].insertRule('#' + actionButton_id + ':after', 'background-image: url("' + actionButton_icon + '");', 1);
+            var styleEl = document.createElement('style');
+            document.head.appendChild(styleEl);
+            var styleSheet = styleEl.sheet;
+            styleSheet.insertRule('#' + actionButton_id + ':after {background-image: url("' + actionButton_icon + '")');
+            
             newActionsBarWrapper.appendChild(actionButton);
         }
     }
