@@ -422,21 +422,47 @@ function setStreamOptions(UI, key) {
                 // audio stream
                 if(stream.streamType === 2)
                 {
-                    audioSelector.append($("<li>").attr("data-value", x).attr("class", stream.selected ? "active": "")
-                                    .append($("<p>").text(stream.displayTitle)));
+                    if(stream.selected)
+                        var activeAudioStreamId = stream.id;
+                    audioSelector.append($("<li>").attr("data-value", x).attr("id", stream.id)
+                                        .append($("<p>").text(stream.displayTitle))
+                    );
                     x++;
                 }
                 // sub stream
                 if(stream.streamType === 3)
                 {
-                    subSelector.append($("<li>").attr("data-value", y)
-                                    .append($("<p>").text(stream.displayTitle)));
+                    if(stream.selected)
+                        var activeSubStreamId = stream.id;
+                    subSelector.append($("<li>").attr("data-value", y).attr("id", stream.id)
+                                    .append($("<p>").text(stream.displayTitle))
+                    );
                     y++;
                 }
             }
 
-            UI.optionselector("audioStreamSelector", true, false);
-            UI.optionselector("subStreamSelector", true, false);
+            // register as option selectors to get "switch active" functionality
+            UI.optionselector("audioStreamSelector", true);
+            UI.optionselector("subStreamSelector", true);
+
+            // set active where stream is selected=true and remove active class at others.
+            // to do this in the previous loop does NOT work!!!
+            audioSelector = document.getElementById("audioStreamSelector")
+                                    .getElementsByTagName("ul")[0];
+            subSelector = document.getElementById("subStreamSelector")
+                                  .getElementsByTagName("ul")[0];
+            audioSelector.querySelectorAll("li").forEach(item => {
+                if(item.id == activeAudioStreamId)
+                    item.classList.add("active");
+                else
+                    item.classList.remove("active");
+            });
+            subSelector.querySelectorAll("li").forEach(item => {
+                if(item.id == activeSubStreamId)
+                    item.classList.add("active");
+                else
+                    item.classList.remove("active");
+            });  
         }
     };
     xhr.send();
