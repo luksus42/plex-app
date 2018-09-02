@@ -116,3 +116,19 @@ function selectDevice(UI, devices) {
     UI.dialog("deviceSelector").show();  
 
 };
+
+function setStream(streamType, partId, streamId) {
+    var path = "/library/parts/"+partId
+                +(streamType === 2 ? "?audioStreamID=" : "?subtitleStreamID=")+streamId
+                +(localStorage.getItem("useAuth") === "true"? "&X-Plex-Token="+localStorage.getItem("authToken") : "");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('PUT', server()+path, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.debug("Changed "+ streamType === 2 ? "audiostream" : "subtitlestream.");
+        }
+    }
+    xhr.send();
+};

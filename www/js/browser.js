@@ -407,6 +407,7 @@ function setStreamOptions(UI, key) {
         if (xhr.readyState == 4 && xhr.status == 200) {
             var response = JSON.parse(xhr.responseText);
             streamDetails = response.MediaContainer.Metadata[0].Media[0].Part[0].Stream;
+            var partId = response.MediaContainer.Metadata[0].Media[0].Part[0].id;
             
             var audioSelector = $("#audioStreamSelector ul");
             var subSelector = $("#subStreamSelector ul");
@@ -416,6 +417,11 @@ function setStreamOptions(UI, key) {
             // clear ul
             audioSelector.empty();
             subSelector.empty();
+
+            subSelector.append($("<li>").attr("data-value", y).attr("id", 0)
+                            .append($("<p>").text("None"))
+            );
+            y++;
 
             for (var i=0; i < streamDetails.length; i++) {
                 var stream = streamDetails[i];
@@ -442,8 +448,8 @@ function setStreamOptions(UI, key) {
             }
 
             // register as option selectors to get "switch active" functionality
-            UI.optionselector("audioStreamSelector", true);
-            UI.optionselector("subStreamSelector", true);
+            uiAudioSelector = UI.optionselector("audioStreamSelector", true);
+            uiSubSelector = UI.optionselector("subStreamSelector", true);
 
             // set active where stream is selected=true and remove active class at others.
             // to do this in the previous loop does NOT work!!!
@@ -462,7 +468,15 @@ function setStreamOptions(UI, key) {
                     item.classList.add("active");
                 else
                     item.classList.remove("active");
-            });  
+            });
+
+            //action when selecting an option
+            uiAudioSelector.onClicked(function(e){
+                setStream(2, partId, e.target.id);
+            });
+            uiSubSelector.onClicked(function(e){
+                setStream(3, partId, e.target.id);
+            });
         }
     };
     xhr.send();

@@ -200,7 +200,7 @@ function streamOptions(list_infos, offset) {
         +(fulltranscode === 1? "&videoQuality="+vQuali : "")
         +(fulltranscode === 1? "&videoResolution="+vRes  : "")
         +"&subtitleSize=100"
-        +"&subtitles=auto"
+        +"&subtitles=burn"
         +"&X-Plex-Platform=Chrome"
         +(localStorage.getItem("useAuth") === "true"? "&X-Plex-Token="+localStorage.getItem("authToken") : "");
 

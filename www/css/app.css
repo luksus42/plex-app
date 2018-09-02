@@ -454,29 +454,26 @@ input[type=range]::-webkit-slider-thumb {
 
 #infoCover {
     float: left;
-    width: 33%;
+    max-width: 33%;
 }
 
 #playMovie {
     border-radius: 0;
-    width: 100%;
-    margin-top: -3px;
+    width: 33%;
 }
 
 #streamSettings {
-    width: 100%;
+    width: 60%;
     overflow: hidden;
     position: absolute;
-    bottom: -11.5rem;
-    height: 15em;
     z-index: 5;
+    display: inline-block;
 }
 
 .streamSelectBtn {
     border-radius: 0 !important;
     min-width: 15% !important;
     width: 45%;
-    margin-top: -3px;
     font-size: 90% !important;
     float: left;
     margin-left: 4px !important;
@@ -500,9 +497,9 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #coverImage {
-    width: 100%;
     display: inline-block;
     min-height: 142px;
+    max-height: 180px;
     background-color: #000000;
 }
 
@@ -512,6 +509,11 @@ input[type=range]::-webkit-slider-thumb {
     width: 60%;
     height: 100%;
     position: absolute;
+}
+
+#infoControls {
+    width: 100%;
+    display: flow-root;
 }
 
 #tableStreamInfos {
