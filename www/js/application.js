@@ -13,6 +13,13 @@ Application.prototype.init = function() {
         // init localstorage
         initLocalStorage();
 
+        if (localStorage.getItem("simpleBg") === "true") {
+            document.getElementById("switchBg").checked = true;
+            document.getElementById("appBackground").className = "oneColor";
+        } else {
+            document.getElementById("switchBg").checked = false;
+        }
+
         UI.pagestack.push("root");
 
         var osTranscode = UI.optionselector("transcodingOptions", true);
@@ -45,6 +52,16 @@ Application.prototype.init = function() {
                 localStorage.setItem("viewAll", true);
             } else {
                 localStorage.setItem("viewAll", false);
+            }
+        });
+
+        document.querySelector('#switchBg').addEventListener('change', function(e, i) {
+            if (e.srcElement.checked === true) {
+                document.getElementById("appBackground").className = "oneColor";
+                localStorage.setItem("simpleBg", true);
+            } else {
+                document.getElementById("appBackground").className = "blur";
+                localStorage.setItem("simpleBg", false);
             }
         });
 
@@ -100,6 +117,12 @@ Application.prototype.init = function() {
                 document.getElementById("switchView").checked = true;
             } else {
                 document.getElementById("switchView").checked = false;
+            }
+
+            if (localStorage.getItem("simpleBg") === "true") {
+                document.getElementById("switchBg").checked = true;
+            } else {
+                document.getElementById("switchBg").checked = false;
             }
 
             // set transcoding option active

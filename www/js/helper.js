@@ -51,6 +51,8 @@ function initLocalStorage() {
         localStorage.setItem("UUID", generateUUID());
     if (localStorage.getItem("switchView") == null)
         localStorage.setItem("switchView", false);
+    if (localStorage.getItem("simpleBg") == null)
+        localStorage.setItem("simpleBg", false);
     if (localStorage.getItem("plexServerVersion") == null)
         localStorage.setItem("plexServerVersion", 0);
     if (localStorage.getItem("playList") == null)

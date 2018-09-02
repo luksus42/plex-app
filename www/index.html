@@ -45,11 +45,11 @@
 
 </head>
 <body>
-    <div class="blur"></div>
     <div data-role="mainview">
 
         <header data-role="header">
         </header>
+        <div class="blur" id=appBackground></div>
 
         <div data-role="content">
 
@@ -156,6 +156,9 @@
                             <p id="viewSwitch" style="margin: 15px 0">
                                 <input type="checkbox" id="switchView"><label for="switchView">view movie section by title</label>
                             </p>
+                            <p id="bgSwitch" style="margin: 15px 0">
+                                <input type="checkbox" id="switchBg"><label for="switchBg">simple background-color</label>
+                            </p>
                         </div>
                     </div>
 
@@ -206,7 +209,7 @@
                             
                         </div>
                         <div id="infoControls">
-                            <button data-role="button" id="playMovie">PLAY</button>
+                            <div id="playMovieButtonContainer"><button data-role="button" id="playMovie">PLAY</button></div>
                             <div id="streamSettings">
                                 <button data-role="button" class="streamSelectBtn" id="selectAudio">AUDIO</button>
                                 <button data-role="button" class="streamSelectBtn" id="selectSubtitle">SUBS</button>
