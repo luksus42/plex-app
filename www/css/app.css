@@ -243,6 +243,8 @@ input {
     z-index: 2147483648;
     font-size: 0.8rem;
     font-weight: bold;
+    /*position: sticky;
+    bottom: -1px;*/
 }
 
 progress {
@@ -360,7 +362,7 @@ input[type=range]::-webkit-slider-thumb {
     width: 100% !important;
     bottom: 0px;
     z-index: 10;
-    max-height: 90vh;
+    /*max-height: calc(100vh - 42px);*/
 }
 
 #switchPlayerVisability {
@@ -530,6 +532,10 @@ input[type=range]::-webkit-slider-thumb {
     padding-right: 10px;
 }
 
+#playListBox {
+    max-height: calc(100vh - 82px);
+}
+
 #playList ul li > a:after {
     /*background: transparent url(../img/ubuntu-mobile/actions/scalable/close.svg) no-repeat 0.5rem 0.5rem !important;
     background-size: 50% 50% !important;
@@ -539,7 +545,7 @@ input[type=range]::-webkit-slider-thumb {
 
 #playList {
     background: #42414100 !important;
-    max-height: 300px;
+    max-height: 60vh;
     overflow-y: scroll;
 }
 
