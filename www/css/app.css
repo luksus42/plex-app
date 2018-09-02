@@ -201,7 +201,7 @@ input {
 #playerBox {
     display: none;
     /*border-top: 0.1rem solid #cc7b19;*/
-    background-color: #000000ab;
+    background-color: rgba(0, 0, 0, 0.671);
 }
 
 .centerContent {
@@ -548,7 +548,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 #playList {
-    background: #000000c9 !important;
+    background: rgba(0, 0, 0, 0.788) !important;
     max-height: 60vh;
     overflow-y: scroll;
 }
