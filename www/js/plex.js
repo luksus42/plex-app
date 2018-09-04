@@ -23,6 +23,7 @@ function getPlexVersion(UI) {
         var msg = "Timeout: Could not identify your plex-server-version. Please check your connection settings.<br/><br/>";
         msg = msg + "The request-url was: "+url+"<br/>";
         msg = msg + "If the url has a local IP, and your not within your local network, then I could not identify your external IP-adress from the given device-selection-list.";
+        msg = msg + "<br/><b>Please check your server's external-access-settings and status.</b>";
         openInfoDialog(UI, msg);
     }
     xhr.send();
@@ -40,11 +41,11 @@ function plexLogin(UI) {
     var auth = 'Basic ' + btoa(username+':'+password);
     var devices;
 
-    xhr.open('POST', "https://my.plexapp.com/users/sign_in.json", true);
+    xhr.open('POST', "https://plex.tv/users/sign_in.json", true);
     //xhr.setRequestHeader('Accept', 'application/json');
     xhr.setRequestHeader('Authorization', auth);
     xhr.setRequestHeader('X-Plex-Product', 'Plex Local'); // Plex app name, eg Laika, Plex Media Server, Media Link.
-    xhr.setRequestHeader('X-Plex-Version', '0.3.4'); // Plex app version number (any string?).
+    xhr.setRequestHeader('X-Plex-Version', '0.4.3'); // Plex app version number (any string?).
     xhr.setRequestHeader('X-Plex-Client-Identifier', localStorage.getItem("UUID")); // UUID, SN, or other number unique per device.
 
     xhr.onreadystatechange = function() {
